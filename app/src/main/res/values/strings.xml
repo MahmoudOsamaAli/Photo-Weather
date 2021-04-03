@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">PhotoWeather</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="take_another_photo">Take Another Photo</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="save_image">Save Image</string>
+    <string name="degree_simple">" ℃"</string>
+    <string name="delete_image">Delete</string>
+    <string name="share_via">Share Via</string>
+    <string name="file_name">Photo_Weather</string>
+    <string name="home">Home</string>
+    <string name="no_imgs_found">No Images Found .. Start Now</string>
+    <string name="create_image">New Image</string>
+    <string name="image_saved">Image Saved</string>
+    <string name="deleted_successfuly">Image Deleted Successfully</string>
+    <string name="error_creatinr_file">Error occurred while creating Image File</string>
+    <string name="please_take_image_first">Please Take An Image First</string>
+    <string name="twitter">Twitter</string>
+    <string name="facebook">Facebook</string>
+    <string name="access_camera_permission_denied">Permission denied</string>
+    <string name="getting_weather_conditions">Getting Weather Conditions</string>
+    <string name="failed_to_get_weather">Failed to get weather data .. please try again</string>
+    <string name="creating_weather_image">Creating weather image</string>
+    <string name="facebook_app_id">2669384739950618</string>
+    <string name="API_KEY_TWITTER">0JNY8wm0X4CgYTRcEDLMKSwce</string>
+    <string name="SECRET_KEY_TWITTER">7OOfwXgZMPtwVTZXMTukOA7xqNaS24PLb1Sut85RenBT64Pdgm</string>
+</resources>

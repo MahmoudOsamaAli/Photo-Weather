@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="purple_200">#FFBB86FC</color>
+    <color name="purple_500">#FF6200EE</color>
+    <color name="purple_700">#FF3700B3</color>
+    <color name="teal_200">#FF03DAC5</color>
+    <color name="teal_700">#FF018786</color>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+
+    <color name="colorPrimary">#344955</color>
+    <color name="colorPrimaryDark">#1d2830</color>
+    <color name="colorAccent">#F9AA33</color>
+    <color name="black_overlay">#66000000</color>
+
+    <color name="transparent">#00FFFFFF</color>
+    <color name="map_path">#46007F</color>
+    <color name="map_path_alpha">#4046007F</color>
+    <color name="picker_default_divider_color">@color/TemplateDarkGrey</color>
+    <color name="TemplateBlack">#222B45</color>
+    <color name="alphaTemplateAccent">#CCFFD100</color>
+    <color name="alphaTemplatePrimary">#CC46007F</color>
+    <color name="alphaTemplateBlack">#CC222B45</color>
+    <color name="TemplateGreen">#26E989</color>
+    <color name="TemplateBlue">#10069F</color>
+    <color name="TemplateDarkGrey">#777777</color>
+    <color name="TemplateMidGrey">#A5A5A5</color>
+    <color name="TemplateLightGrey">#F5F5F5</color>
+    <color name="TemplateWhite">#ffffff</color>
+    <color name="TemplateError">#FC440F</color>
+    <color name="TemplateTintedBackground">#EFEFEF</color>
+    <color name="TemplateLightGreen">#3226E989</color>
+    <color name="TemplateSkyBlue">#4fcef9</color>
+    <color name="TemplateRed">#C91111</color>
+    <color name="TemplateLightRed">#F2F2F2</color>
+</resources>

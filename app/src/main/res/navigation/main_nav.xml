@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/home_fragment"
+    >
+
+    <fragment
+        android:id="@+id/home_fragment"
+        android:name="com.example.photoweather.view.fragments.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/from_home_to_create_image"
+            app:destination="@id/create_image_fragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popExitAnim="@anim/exit_to_left"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/create_image_fragment"
+        android:name="com.example.photoweather.view.fragments.CreateImageFragment"
+        android:label="fragment_take_image"
+        tools:layout="@layout/fragment_take_image">
+        <action
+            android:id="@+id/from_create_image_to_home"
+            app:destination="@id/home_fragment"
+            app:enterAnim="@anim/enter_from_right"
+            app:popEnterAnim="@anim/enter_from_right"
+            app:exitAnim="@anim/exit_to_left"
+            app:popExitAnim="@anim/exit_to_left"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/home_fragment"
+            />
+    </fragment>
+</navigation>
