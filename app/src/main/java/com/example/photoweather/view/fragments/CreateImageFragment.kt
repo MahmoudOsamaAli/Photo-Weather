@@ -20,10 +20,7 @@ import com.example.photoweather.network.models.Status
 import com.example.photoweather.utils.AppUtils
 import com.example.photoweather.utils.ImageUtil
 import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
-import java.io.File
-import java.io.IOException
 
 class CreateImageFragment : Fragment() {
 
@@ -106,32 +103,6 @@ class CreateImageFragment : Fragment() {
                 startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
             }
         }
-//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-//            // Ensure that there's a camera activity to handle the intent
-//            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
-//                // Create the File where the photo should go
-//                val photoFile: File? = try {
-//                    ImageUtil.createImageFile(requireContext())
-//                } catch (ex: IOException) {
-//                    AppUtils.makeToast(
-//                        requireContext(),
-//                        resources.getString(R.string.error_creatinr_file)
-//                    )
-//                    null
-//                }
-//                // Continue only if the File was successfully created
-//                photoFile?.also {
-//                    viewModel.newImagePath = photoFile.absolutePath
-//                    val photoURI: Uri = FileProvider.getUriForFile(
-//                        requireContext(),
-//                        "com.example.photoweather.fileprovider",
-//                        it
-//                    )
-//                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-//                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-//                }
-//            }
-//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

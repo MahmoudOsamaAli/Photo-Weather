@@ -20,7 +20,7 @@ object ImageUtil {
     private const val TAG = "ImageUtil"
 
     fun createImageFile(context: Context): File? {
-        val folderName = "Photo_Weather"
+        val folderName = context.resources.getString(R.string.file_name)
         val storageDir = File(
             context.getExternalFilesDir(Environment.DIRECTORY_DCIM),
             folderName
