@@ -44,8 +44,8 @@ class HomeFragment : Fragment(), RecyclerViewListener, DialogDismiss {
         return binding.root
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         AppUtils.statusCheck(requireActivity())
     }
 

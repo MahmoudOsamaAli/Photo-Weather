@@ -94,7 +94,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        AppUtils.statusCheck(this)
         if (AppUtils.checkLocationPermissions(this, 2)) startLocationUpdates()
     }
 

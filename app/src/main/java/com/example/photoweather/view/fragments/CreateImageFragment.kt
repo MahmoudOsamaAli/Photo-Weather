@@ -29,7 +29,7 @@ class CreateImageFragment : Fragment() {
 
     private lateinit var viewModel: BaseViewModel
     private lateinit var binding: FragmentTakeImageBinding
-    private var dialog: ProgressDialog = ProgressDialog()
+    private var dialog: ProgressDialog? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,7 +49,7 @@ class CreateImageFragment : Fragment() {
 
     private fun init() {
         requestTakeImage()
-        dialog.isCancelable = false
+        dialog?.isCancelable = false
         setToolBarConfig()
         setClickListeners()
     }
@@ -92,61 +92,78 @@ class CreateImageFragment : Fragment() {
     }
 
     private fun requestTakeImage() {
-        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-            // Ensure that there's a camera activity to handle the intent
-            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    ImageUtil.createImageFile()
-                } catch (ex: IOException) {
-                    AppUtils.makeToast(
-                        requireContext(),
-                        resources.getString(R.string.error_creatinr_file)
-                    )
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    viewModel.newImagePath = photoFile.absolutePath
-                    val photoURI: Uri = FileProvider.getUriForFile(
-                        requireContext(),
-                        "com.example.photoweather.fileprovider",
-                        it
-                    )
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        viewModel.createFile().let {
+            // Save a file: path for use with ACTION_VIEW intents
+            it?.let { file ->
+                viewModel.newImagePath = file.absolutePath
+                val uri = FileProvider.getUriForFile(
+                    requireContext(),
+                    "${requireActivity().packageName}.fileprovider",
+                    file
+                )
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, uri)
+                startActivityForResult(intent, REQUEST_IMAGE_CAPTURE)
             }
         }
+//        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+//            // Ensure that there's a camera activity to handle the intent
+//            takePictureIntent.resolveActivity(requireContext().packageManager)?.also {
+//                // Create the File where the photo should go
+//                val photoFile: File? = try {
+//                    ImageUtil.createImageFile(requireContext())
+//                } catch (ex: IOException) {
+//                    AppUtils.makeToast(
+//                        requireContext(),
+//                        resources.getString(R.string.error_creatinr_file)
+//                    )
+//                    null
+//                }
+//                // Continue only if the File was successfully created
+//                photoFile?.also {
+//                    viewModel.newImagePath = photoFile.absolutePath
+//                    val photoURI: Uri = FileProvider.getUriForFile(
+//                        requireContext(),
+//                        "com.example.photoweather.fileprovider",
+//                        it
+//                    )
+//                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+//                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+//                }
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            MainScope().launch { handleResult() }
+            handleResult()
         } else {
             viewModel.deleteImage()
         }
     }
 
-    private suspend fun handleResult() {
-            MainScope().async { dialog.show(requireActivity().supportFragmentManager, dialog.tag) }.await()
-            dialog.addText(resources.getString(R.string.getting_weather_conditions))
-            viewModel.getWeatherConditions().observe(viewLifecycleOwner, {
-                it?.let { resource ->
-                    if (resource.status == Status.SUCCESS) {
-                        viewModel.weatherConditions = resource.data
-                        MainScope().launch { createImage() }
-                    }else if (resource.status == Status.ERROR){
-                        viewModel.deleteImage()
-                        dialog.dismiss()
-                        AppUtils.makeToast(requireContext() , resources.getString(R.string.failed_to_get_weather))
-                    }
+    private fun handleResult() {
+        dialog = ProgressDialog().addText(resources.getString(R.string.getting_weather_conditions))
+        dialog?.show(requireActivity().supportFragmentManager, dialog?.tag)
+        viewModel.getWeatherConditions().observe(viewLifecycleOwner, {
+            it?.let { resource ->
+                if (resource.status == Status.SUCCESS) {
+                    viewModel.weatherConditions = resource.data
+                    MainScope().launch { createImage() }
+                } else if (resource.status == Status.ERROR) {
+                    viewModel.deleteImage()
+                    dialog?.dismiss()
+                    AppUtils.makeToast(
+                        requireContext(),
+                        resources.getString(R.string.failed_to_get_weather)
+                    )
                 }
-            })
+            }
+        })
     }
 
-    private suspend fun createImage(){
-        dialog.addText(resources.getString(R.string.creating_weather_image))
+    private suspend fun createImage() {
+        dialog?.addText(resources.getString(R.string.creating_weather_image))
         val drawTextToBitmap = ImageUtil.drawTextToBitmap(
             viewModel.weatherConditions,
             viewModel.newImagePath!!,
@@ -154,7 +171,7 @@ class CreateImageFragment : Fragment() {
         )
         binding.tokenImage.setImageBitmap(drawTextToBitmap)
         binding.tokenImage.visibility = View.VISIBLE
-        dialog.dismiss()
+        dialog?.dismiss()
         scanFile()
     }
 

@@ -19,14 +19,14 @@ object ImageUtil {
 
     private const val TAG = "ImageUtil"
 
-    fun createImageFile(): File? {
+    fun createImageFile(context: Context): File? {
         val folderName = "Photo_Weather"
         val storageDir = File(
-            Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
+            context.getExternalFilesDir(Environment.DIRECTORY_DCIM),
             folderName
         )
         return if (!storageDir.exists()) {
-            if (!storageDir.mkdir()) null
+            if (!storageDir.mkdirs()) null
             else createFile(storageDir)
         } else createFile(storageDir)
     }
@@ -35,7 +35,7 @@ object ImageUtil {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT).format(Date())
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
+            ".png", /* suffix */
             storageDir /* directory */
         )
     }

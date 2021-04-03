@@ -30,9 +30,13 @@ object AppUtils {
             || ContextCompat.checkSelfPermission(
                 context, Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
+            || ContextCompat.checkSelfPermission(
+                context, Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
         ) {
             ActivityCompat.requestPermissions(
                 context, arrayOf(
+                    Manifest.permission.CAMERA,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE,
                     Manifest.permission.READ_EXTERNAL_STORAGE,
                     Manifest.permission.ACCESS_COARSE_LOCATION,
@@ -91,7 +95,7 @@ object AppUtils {
             .setCancelable(false)
             .setPositiveButton("Yes") { dialog, _ ->
                 context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
-                dialog.cancel()
+                dialog.dismiss()
             }
             .setNegativeButton("No") { dialog, _ -> dialog.cancel() }
         val alert: AlertDialog = builder.create()

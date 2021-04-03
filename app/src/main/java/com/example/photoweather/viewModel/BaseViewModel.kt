@@ -13,14 +13,17 @@ import com.example.photoweather.R
 import com.example.photoweather.network.models.Resource
 import com.example.photoweather.network.models.WeatherConditions
 import com.example.photoweather.utils.AppUtils
+import com.example.photoweather.utils.ImageUtil
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class BaseViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val context: Context = application
     var selectedImageURL: MutableLiveData<String> = MutableLiveData()
     var lastLocation:MutableLiveData<Location> = MutableLiveData()
     val imageUrlLiveData: LiveData<String> = selectedImageURL
@@ -29,12 +32,22 @@ class BaseViewModel(application: Application) : AndroidViewModel(application) {
     var imagesListLiveData: LiveData<ArrayList<String>> = imagesList
     var newImagePath:String? = null
 
+
+    private fun getBaseContext(): Context {
+        return getApplication<Application>().baseContext
+    }
+
+    fun createFile(): File? {
+        return ImageUtil.createImageFile(getBaseContext())
+    }
+
+
     fun getAllImages(){
         CoroutineScope(Dispatchers.Default).launch {
             val storageDir =
                 File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM),
-                    context.resources.getString(R.string.file_name)
+                    getBaseContext().getExternalFilesDir(Environment.DIRECTORY_DCIM),
+                    getBaseContext().resources.getString(R.string.file_name)
                 )
             if (storageDir.exists()) {
                 val list = arrayListOf<String>()

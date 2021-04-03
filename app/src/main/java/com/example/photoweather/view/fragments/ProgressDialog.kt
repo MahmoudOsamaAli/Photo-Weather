@@ -15,12 +15,16 @@ import com.example.photoweather.databinding.DialogLoadingBinding
 class ProgressDialog:DialogFragment() {
 
     private lateinit var binding:DialogLoadingBinding
+    var statusText:String? = null
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater,R.layout.dialog_loading , container , false)
+        statusText?.let {
+            binding.status.text = it
+        }
         return binding.root
     }
 
@@ -37,7 +41,8 @@ class ProgressDialog:DialogFragment() {
         )
     }
 
-    fun addText(string: String) {
-        binding.status.text = string
+    fun addText(string: String) : ProgressDialog {
+        statusText = string
+        return this
     }
 }
